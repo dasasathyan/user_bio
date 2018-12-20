@@ -1,0 +1,21 @@
+<div class="header">
+<div class="container">
+  <h1>threadly</h1>
+</div>
+</div>
+
+<div class="main">
+<div class="container">
+  
+  <!-- Form goes here -->
+
+  
+  
+  <ul class="comments">
+  <% @all_posts.each do |p| %>
+    <li><%= p.comment %></li>
+  <% end %>
+</ul>
+
+</div>
+</div>

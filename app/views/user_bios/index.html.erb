@@ -1,0 +1,12 @@
+<div class="user_bio">
+  <div class="container">
+  <% @bios.each do |bio| %> 
+			<div class="message"> 
+  			<p class="bio"><%= bio.bio %></p> 
+				<p class="goal"><%= bio.goal %></p> 
+  			<p class="time"><%= bio.created_at %></p> 
+
+			</div> 
+		<% end %>
+  </div>
+</div>

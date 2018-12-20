@@ -1,0 +1,3 @@
+class OdwUser < ApplicationRecord
+    
+end

@@ -47,7 +47,7 @@ Rails.application.configure do
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
-  config.assets.debug = true
+  config.assets.debug = false
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
@@ -61,6 +61,28 @@ Rails.application.configure do
 
   #devise gem config
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+
+  config.action_mailer.delivery_method = :sendmail
+# Defaults to:
+# config.action_mailer.sendmail_settings = {
+#   location: '/usr/sbin/sendmail',
+#   arguments: '-i'
+# }
+config.action_mailer.perform_deliveries = true
+config.action_mailer.raise_delivery_errors = true
+config.action_mailer.default_options = {from: 'dasa.sathyan@christuniversity.in'}
+
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = {
+address:              'mail.smtp2go.com',
+port:                 465,
+domain:               'mail.smtp2go.com',
+user_name:            'dasa.sathyan@mca.christuniversity.in',
+password:             '4XoR6DiZY56r',
+authentication:       'plain',
+tls:                   true,
+enable_starttls_auto: true  }
 
 
 end

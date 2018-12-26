@@ -1,7 +1,13 @@
 class UserBiosController < ApplicationController
+    #load_and_authorize_resource
     before_action :authenticate_user!
   def index
-		@bios = UserBio.all
+    if current_user.id == 1
+      @bios=UserBio.all
+    else
+    @bios = UserBio.where(:user_id => current_user.id)
+    #authorize! :index, @bio
+    end
 	end
 	
 	def new
@@ -9,13 +15,22 @@ class UserBiosController < ApplicationController
 	end
 	
   def create
-    #binding.pry
-  	@bio = UserBio.new(bio_params) 
-  	if @bio.save 
-    	redirect_to '/user_bios' 
-  	else 
+    @bio = UserBio.new(bio_params) 
+    @bio.name = current_user.name
+    @bio.emailid=current_user.email
+    @bio.user_id=current_user.id
+    if @bio.save 
+      #binding.pry
+      UserBioMailer.welcome_email(@bio).deliver_now
+    	redirect_to :user_bios 
+    else 
+      flash[:error]= @bio.errors
     	render 'new' 
   	end 
+  end
+
+  def show
+    @bio=UserBio.find(params[:id])
   end
 
   def edit
@@ -28,10 +43,15 @@ class UserBiosController < ApplicationController
   end
 
   def destroy
+    binding.pry
+    @bio = UserBio.find(params[:id])
+    @bio.destroy
+    redirect_to user_bios
   end
 
   private 
   def bio_params
     params.require(:user_bio).permit(:bio, :goal) 
   end
+
 end

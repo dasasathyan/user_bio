@@ -9,11 +9,7 @@ Rails.application.routes.draw do
   get '/messages' => 'messages#index'
 	get '/messages/new' => 'messages#new'	
   post 'messages' => 'messages#create'
-
-  get '/user_bios' => 'user_bios#index'
   resources :user_bios
-
- # root 'posts#index'
-  root 'user_bio#new'
+  
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

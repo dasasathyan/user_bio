@@ -1,12 +1,38 @@
 <div class="user_bio">
-  <div class="container">
-  <% @bios.each do |bio| %> 
-			<div class="message"> 
-  			<p class="bio"><%= bio.bio %></p> 
-				<p class="goal"><%= bio.goal %></p> 
-  			<p class="time"><%= bio.created_at %></p> 
-
-			</div> 
+		<% if user_signed_in? %>
+<li> <%= link_to current_user.email, edit_user_registration_path %> </li>
+<li> <%= link_to "Log out",destroy_user_session_path, method: :delete %></li>
+<% end %>
+	<div class="container">
+	<table class="table table-bordered">
+  <button type="button" class="btn btn-success" style="float:right">New  </button>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">No.</th>
+      <th scope="col">Updated On</th>
+      <th scope="col">Bio</th>
+      <th scope="col">Goal</th>
+			<th scope="col">Name</th>
+    </tr>
+  </thead>
+  <% @bios.each_with_index do |bio, index| %> 
+  
+  <tbody>
+    <tr>
+      <th scope="row"><%= index+1 %></th>
+      <td><%= bio.created_at %></td>
+      <td><%= bio.bio %></td>
+      <td><%= bio.goal %></td>
+			<td><%= bio.name %></td>
+      <td><%= label_tag "bio.ids[]", "" %>
+          <%= check_box_tag "bio.ids[]", bio.id %></td>
+      <td><%= link_to 'Remove', @bio, method: :destroy, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  </tbody>
+  
 		<% end %>
+</table>
+			</div> 
   </div>
 </div>
+

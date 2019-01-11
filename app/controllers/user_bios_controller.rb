@@ -1,7 +1,9 @@
 class UserBiosController < ApplicationController
     #load_and_authorize_resource
     before_action :authenticate_user!
+    include UserBiosHelper
   def index
+    commentinconsole
     if current_user.id == 1
       @bios=UserBio.all
     else
@@ -43,10 +45,11 @@ class UserBiosController < ApplicationController
   end
 
   def destroy
-    binding.pry
+    #binding.pry
     @bio = UserBio.find(params[:id])
     @bio.destroy
-    redirect_to user_bios
+    UserBioMailer.rejection_email(@bio).deliver_now
+    redirect_to user_bios_path
   end
 
   private 
